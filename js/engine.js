@@ -1,3 +1,5 @@
+// Theodore Sawyer, FEND - Project 03: 'Classic Arcade Game Clone' / Engine.js / 07.28.18
+
 /* Engine.js
  * This file provides the game loop functionality (update entities and render),
  * draws the initial game board on the screen, and then calls the update and
@@ -89,11 +91,13 @@ var Engine = (function(global) {
      * the data/properties related to the object. Do your drawing in your
      * render methods.
      */
+
+    // 07.28.18 - commented out to test
     function updateEntities(dt) {
-        allEnemies.forEach(function(enemy) {
-            enemy.update(dt);
-        });
-        player.update();
+        // allEnemies.forEach(function(enemy) {
+        //     enemy.update(dt);
+        // });
+        // player.update();
     }
 
     /* This function initially draws the "game level", it will then call
@@ -118,8 +122,9 @@ var Engine = (function(global) {
             numCols = 5,
             row, col;
         
+        // 07.28.18 - added missing ';' semicolon to .clearRect() method statement
         // Before drawing, clear existing canvas
-        ctx.clearRect(0,0,canvas.width,canvas.height)
+        ctx.clearRect(0,0,canvas.width,canvas.height);
 
         /* Loop through the number of rows and columns we've defined above
          * and, using the rowImages array, draw the correct image for that
@@ -145,13 +150,15 @@ var Engine = (function(global) {
      * tick. Its purpose is to then call the render functions you have defined
      * on your enemy and player entities within app.js
      */
+
+    // 07.28.18 - commented out to test
     function renderEntities() {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        allEnemies.forEach(function(enemy) {
-            enemy.render();
-        });
+        // allEnemies.forEach(function(enemy) {
+        //     enemy.render();
+        // });
 
         player.render();
     }

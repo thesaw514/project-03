@@ -1,3 +1,5 @@
+<!-- Theodore Sawyer, FEND - Project 03: 'Classic Arcade Game Clone' / README.md / 07.28.18 -->
+
 frontend-nanodegree-arcade-game
 ===============================
 

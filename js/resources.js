@@ -1,3 +1,6 @@
+// Theodore Sawyer, FEND - Project 03: 'Classic Arcade Game Clone' / Resources.js / 07.28.18
+
+
 /* Resources.js
  * This is simply an image loading utility. It eases the process of loading
  * image files so that they can be used within your game. It also includes

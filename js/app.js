@@ -1,3 +1,5 @@
+// Theodore Sawyer, FEND - Project 03: 'Classic Arcade Game Clone' / app.js / 07.28.18
+
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -25,12 +27,26 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
+// 07.28.18 - Initial PlayerClass Class Definition
+class PlayerClass {
+    constructor() {
+        this.x = 200;
+        this.y = 400;
+        this.sprite = 'images/char-boy.png';
+    }
+
+    // Draw hero sprite on current x and y coord position
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-
+// 07.28.18 - instantiate New Player Object
+const player = new PlayerClass();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
