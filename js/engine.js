@@ -92,11 +92,12 @@ var Engine = (function(global) {
      * render methods.
      */
 
-    // 07.28.18 - commented out to test
+    // 07.28.18 - Initially commented out to test
+    // 07.29.18 - Un-commented to re-enable logic + render enemy objects
     function updateEntities(dt) {
-        // allEnemies.forEach(function(enemy) {
-        //     enemy.update(dt);
-        // });
+        allEnemies.forEach(function(enemy) {
+            enemy.update(dt);
+        });
         // player.update();
     }
 
@@ -151,14 +152,15 @@ var Engine = (function(global) {
      * on your enemy and player entities within app.js
      */
 
-    // 07.28.18 - commented out to test
+    // 07.28.18 - Initially commented out to test
+    // 07.29.18 - Un-commented to re-enable logic + render enemy objects
     function renderEntities() {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        // allEnemies.forEach(function(enemy) {
-        //     enemy.render();
-        // });
+        allEnemies.forEach(function(enemy) {
+            enemy.render();
+        });
 
         player.render();
     }

@@ -4,13 +4,28 @@
 /* eslint-disable indent */
 
 // Enemies our player must avoid
-var Enemy = function() {
+
+// 07.29.18 - Updated 'Enemy' Contructor to accept additional parameters
+var Enemy = function(x, y, movement) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
+
+    // 07.29.18 - Added initial 'Enemy' starting properties
+    this.x = x;
+    this.y = y + 60;
+
+    // 07.29.18 - Added 'Enemy' movement speed property
+    this.movement = movement;
+
     this.sprite = 'images/enemy-bug.png';
+
+    // 07.29.18 Added enemy_boundary properties
+    this.move_x = 100;
+    this.enemy_boundary = this.move_x * 5;
+
 };
 
 // Update the enemy's position, required method for game
@@ -19,6 +34,13 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+
+    // 07.29.18 - Added enemy_boundary conditional logic + continous iteration
+    if (this.x < this.enemy_boundary) {
+        this.x += this.movement * dt;
+    } else {
+        this.x = -100;
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -30,7 +52,7 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
-// 07.28.18 - Initial 'PlayerClass' Class Definition
+// 07.28.18 - Initial 'PlayerClass' class definition
 class PlayerClass {
     constructor() {
         this.x = 200;
@@ -38,7 +60,7 @@ class PlayerClass {
 
         this.sprite = 'images/char-boy.png';
 
-        // 07.29.18 - Added 'move_x' + 'move_y' Properties
+        // 07.29.18 - Added 'move_x' + 'move_y' properties
         this.move_x = 101;
         this.move_y = 83;
     }
@@ -48,7 +70,7 @@ class PlayerClass {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
-    // 07.29.18 - Implemented Missing 'handleInput()' Method
+    // 07.29.18 - Implemented missing 'handleInput()' Method
     handleInput(input) {
         switch (input) {
 
@@ -83,8 +105,17 @@ class PlayerClass {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-// 07.28.18 - Instantiate New 'player' Object
+// 07.28.18 - Instantiate new 'player' Object
 const player = new PlayerClass();
+
+// 07.29.18 - Instantiate new 'enemy' Objects
+const enemy_01 = new Enemy(-100, 0, 50);
+const enemy_02 = new Enemy(- 100, 83, 75);
+const enemy_03 = new Enemy(-100, 166, 100);
+
+//07.29.18 - Instantiate 'allEnemies' Array to hold enemy Objects
+const allEnemies = [];
+allEnemies.push(enemy_01, enemy_02, enemy_03);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
