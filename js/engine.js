@@ -1,4 +1,4 @@
-// Theodore Sawyer, FEND - Project 03: 'Classic Arcade Game Clone' / Engine.js / 07.28.18
+// Theodore Sawyer, FEND - Project 03: 'Classic Arcade Game Clone' / engine.js / 07.28.18
 
 /* Engine.js
  * This file provides the game loop functionality (update entities and render),
@@ -15,16 +15,31 @@
  * writing app.js a little simpler to work with.
  */
 
-var Engine = (function(global) {
+const Engine = (function(global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
      */
-    var doc = global.document,
+    let doc = global.document,
         win = global.window,
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
+
+    // 08.01.18 - Instantiated 'requestID' variable to stop game engine
+    let requestID;
+
+    // 08.01.18 Modal declaration for end-game + restart btn
+    const modal = document.querySelector('.modal-background');
+    const restart = document.querySelector('.modal-btn');
+
+    // 08.01.18 Event Listener for 'restart' btn
+    restart.addEventListener('click', function() {
+        modal.classList.toggle('hide');
+        player.reInit();
+        player.gameOver = false;
+        win.requestAnimationFrame(main);
+    });
 
     canvas.width = 505;
     canvas.height = 606;
@@ -40,7 +55,7 @@ var Engine = (function(global) {
          * would be the same for everyone (regardless of how fast their
          * computer is) - hurray time!
          */
-        var now = Date.now(),
+        const now = Date.now(),
             dt = (now - lastTime) / 1000.0;
 
         /* Call our update/render functions, pass along the time delta to
@@ -57,7 +72,14 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        win.requestAnimationFrame(main);
+
+        // 08.01.18 - Conditional to stop game engine (if player makes it across)
+        if (player.gameOver === true) {
+            win.cancelAnimationFrame(requestID);
+            modal.classList.toggle('hide');
+        } else {
+            win.requestAnimationFrame(main);
+        }
     }
 
     /* This function does some initial setup that should only occur once,
@@ -98,7 +120,9 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        // player.update();
+
+        // 07.31.18 - Un-commented to test newly implemented 'update()' method
+        player.update();
     }
 
     /* This function initially draws the "game level", it will then call
@@ -111,21 +135,21 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
-        var rowImages = [
-                'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+        let rowImages = [
+                'images/water-block.png', // Top row is water
+                'images/stone-block.png', // Row 1 of 3 of stone
+                'images/stone-block.png', // Row 2 of 3 of stone
+                'images/stone-block.png', // Row 3 of 3 of stone
+                'images/grass-block.png', // Row 1 of 2 of grass
+                'images/grass-block.png' // Row 2 of 2 of grass
             ],
             numRows = 6,
             numCols = 5,
             row, col;
-        
+
         // 07.28.18 - added missing ';' semicolon to .clearRect() method statement
         // Before drawing, clear existing canvas
-        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         /* Loop through the number of rows and columns we've defined above
          * and, using the rowImages array, draw the correct image for that

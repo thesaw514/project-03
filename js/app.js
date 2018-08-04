@@ -6,7 +6,7 @@
 // Enemies our player must avoid
 
 // 07.29.18 - Updated 'Enemy' Contructor to accept additional parameters
-var Enemy = function(x, y, movement) {
+const Enemy = function(x, y, movement) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -23,7 +23,7 @@ var Enemy = function(x, y, movement) {
     this.sprite = 'images/enemy-bug.png';
 
     // 07.29.18 Added enemy_boundary properties
-    this.move_x = 100;
+    this.move_x = 101;
     this.enemy_boundary = this.move_x * 5;
 
 };
@@ -55,14 +55,33 @@ Enemy.prototype.render = function() {
 // 07.28.18 - Initial 'PlayerClass' class definition
 class PlayerClass {
     constructor() {
+
+        // 07.31.18 - Adjusted initial values
         this.x = 200;
-        this.y = 400;
+        this.y = 392;
 
         this.sprite = 'images/char-boy.png';
 
         // 07.29.18 - Added 'move_x' + 'move_y' properties
         this.move_x = 101;
         this.move_y = 83;
+
+        // 08.01.18 - Added 'gameOver' property
+        this.gameOver = false;
+    }
+
+    // 07.31.18 - Implemented 'update()' method
+    update() {
+        for (let enemy of allEnemies) {
+            if (this.y === enemy.y && (enemy.x + enemy.move_x / 2 > this.x && enemy.x < this.x + this.move_x / 2)) {
+                this.reInit();
+            }
+        }
+
+        // 08.01.18 - Conditional check for 'gameOver' condition
+        if (this.y === 60) {
+            this.gameOver = true;
+        }
     }
 
     // Draw hero sprite on current x and y coord position
@@ -70,7 +89,7 @@ class PlayerClass {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
-    // 07.29.18 - Implemented missing 'handleInput()' Method
+    // 07.29.18 - Implemented missing 'handleInput()' method
     handleInput(input) {
         switch (input) {
 
@@ -97,9 +116,16 @@ class PlayerClass {
                     this.y += this.move_y;
                 }
                 break;
-            }
         }
     }
+
+    // 08.01.18 - Reinitializes 'player' position
+    reInit() {
+        this.x = 200;
+        this.y = 392;
+    }
+}
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -109,9 +135,9 @@ class PlayerClass {
 const player = new PlayerClass();
 
 // 07.29.18 - Instantiate new 'enemy' Objects
-const enemy_01 = new Enemy(-100, 0, 50);
-const enemy_02 = new Enemy(- 100, 83, 75);
-const enemy_03 = new Enemy(-100, 166, 100);
+const enemy_01 = new Enemy(-100, 0, 225);
+const enemy_02 = new Enemy(-100, 83, 175);
+const enemy_03 = new Enemy(-100, 166, 250);
 
 //07.29.18 - Instantiate 'allEnemies' Array to hold enemy Objects
 const allEnemies = [];
@@ -120,7 +146,7 @@ allEnemies.push(enemy_01, enemy_02, enemy_03);
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
+    const allowedKeys = {
         37: 'move_left',
         38: 'move_up',
         39: 'move_right',
